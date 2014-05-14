@@ -1,0 +1,632 @@
+'fileTypes': [
+  'volt'
+]
+'scopeName': 'text.html.volt'
+'foldingStartMarker': '(?x)(<(?i:head|body|table|thead|tbody|tfoot|tr|div|select|fieldset|style|script|ul|ol|li|form|dl)\\b.*?>|<!--(?!.*--\\s*>)|^<!--\\ \\#tminclude\\ (?>.*?-->)$|\\{%\\s+(if|for|))'
+'foldingStopMarker': '(?x)(</(?i:head|body|table|thead|tbody|tfoot|tr|div|select|fieldset|style|script|ul|ol|li|form|dl)>|^(?!.*?<!--).*?--\\s*>|^<!--\\ end\\ tminclude\\ -->$|\\{%\\s+end(if|for|))'
+'name': 'Volt'
+'patterns': [
+  {
+    'include': '#volt-variable-tags'
+  }
+  {
+    'include': '#volt-expression-tags'
+  }
+  {
+    'include': '#volt-comment-tags'
+  }
+  {
+    'include': 'text.html.basic'
+  }
+]
+'repository':
+  'volt-arrays':
+    'begin': '(?<=[\\s\\(\\{\\[:,])\\['
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.section.array.begin.volt'
+    'end': '\\]'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.section.array.end.volt'
+    'name': 'meta.array.volt'
+    'patterns': [
+      {
+        'include': '#volt-arrays'
+      }
+      {
+        'include': '#volt-hashes'
+      }
+      {
+        'include': '#volt-constants'
+      }
+      {
+        'include': '#volt-strings'
+      }
+      {
+        'include': '#volt-functions-warg'
+      }
+      {
+        'include': '#volt-functions'
+      }
+      {
+        'include': '#volt-helpers'
+      }
+      {
+        'include': '#volt-macros'
+      }
+      {
+        'include': '#volt-objects'
+      }
+      {
+        'include': '#volt-properties'
+      }
+      {
+        'include': '#volt-filters-warg'
+      }
+      {
+        'include': '#volt-filters'
+      }
+      {
+        'include': '#volt-filters-warg-ud'
+      }
+      {
+        'include': '#volt-filters-ud'
+      }
+      {
+        'match': ','
+        'name': 'punctuation.separator.object.volt'
+      }
+    ]
+  'volt-comment-tags':
+    'begin': '\\{#-?'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.comment.begin.volt'
+    'end': '-?#\\}'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.comment.end.volt'
+    'name': 'comment.block.volt'
+  'volt-constants':
+    'patterns': [
+      {
+        'match': '(?i)(?<=[\\s\\[\\(\\{:,])(?:true|false|null|none)(?=[\\s\\)\\]\\}\\,])'
+        'name': 'constant.language.volt'
+      }
+      {
+        'match': '(?<=[\\s\\[\\(\\{:,]|\\.\\.|\\*\\*)[0-9]+(?:\\.[0-9]+)?(?=[\\s\\)\\]\\}\\,]|\\.\\.|\\*\\*)'
+        'name': 'constant.numeric.volt'
+      }
+    ]
+  'volt-expression-tags':
+    'begin': '\\{%-?'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.section.tag.volt'
+    'end': '-?%\\}'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.section.tag.volt'
+    'name': 'meta.tag.template.block.volt'
+    'patterns': [
+      {
+        'include': '#volt-constants'
+      }
+      {
+        'include': '#volt-keywords'
+      }
+      {
+        'include': '#volt-operators'
+      }
+      {
+        'include': '#volt-functions-warg'
+      }
+      {
+        'include': '#volt-functions'
+      }
+      {
+        'include': '#volt-helpers'
+      }
+      {
+        'include': '#volt-macros'
+      }
+      {
+        'include': '#volt-filters-warg'
+      }
+      {
+        'include': '#volt-filters'
+      }
+      {
+        'include': '#volt-filters-warg-ud'
+      }
+      {
+        'include': '#volt-filters-ud'
+      }
+      {
+        'include': '#volt-objects'
+      }
+      {
+        'include': '#volt-properties'
+      }
+      {
+        'include': '#volt-strings'
+      }
+      {
+        'include': '#volt-arrays'
+      }
+      {
+        'include': '#volt-hashes'
+      }
+    ]
+  'volt-filters':
+    'captures':
+      '1':
+        'name': 'support.function.volt'
+    'match': '(?<=(?:[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]\\)\\\'\\"]\\|)|\\{%\\sfilter\\s)(capitalize|e(?:scape)?|join|(?:json|url)_encode|keys|length|lower|raw|reverse|sort|striptags|title|uppercase|lowercase|nl2br|slashes)(?=[\\s\\|\\]\\}\\):,]|\\.\\.|\\*\\*)'
+  'volt-filters-ud':
+    'captures':
+      '1':
+        'name': 'meta.function-call.other.volt'
+    'match': '(?<=(?:[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]\\)\\\'\\"]\\|)|\\{%\\sfilter\\s)([a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*)'
+  'volt-filters-warg':
+    'begin': '(?<=(?:[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]\\)\\\'\\"]\\|)|\\{%\\sfilter\\s)(date|default|format|join|merge|replace)(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'support.function.volt'
+      '2':
+        'name': 'punctuation.definition.parameters.begin.volt'
+    'contentName': 'meta.function.arguments.volt'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.parameters.end.volt'
+    'patterns': [
+      {
+        'include': '#volt-constants'
+      }
+      {
+        'include': '#volt-functions-warg'
+      }
+      {
+        'include': '#volt-functions'
+      }
+      {
+        'include': '#volt-helpers'
+      }
+      {
+        'include': '#volt-macros'
+      }
+      {
+        'include': '#volt-objects'
+      }
+      {
+        'include': '#volt-properties'
+      }
+      {
+        'include': '#volt-filters-warg'
+      }
+      {
+        'include': '#volt-filters'
+      }
+      {
+        'include': '#volt-filters-warg-ud'
+      }
+      {
+        'include': '#volt-filters-ud'
+      }
+      {
+        'include': '#volt-strings'
+      }
+      {
+        'include': '#volt-arrays'
+      }
+      {
+        'include': '#volt-hashes'
+      }
+    ]
+  'volt-filters-warg-ud':
+    'begin': '(?<=(?:[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]\\)\\\'\\"]\\|)|\\{%\\sfilter\\s)([a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*)(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'meta.function-call.other.volt'
+      '2':
+        'name': 'punctuation.definition.parameters.begin.volt'
+    'contentName': 'meta.function.arguments.volt'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.parameters.end.volt'
+    'patterns': [
+      {
+        'include': '#volt-constants'
+      }
+      {
+        'include': '#volt-functions-warg'
+      }
+      {
+        'include': '#volt-functions'
+      }
+      {
+        'include': '#volt-helpers'
+      }
+      {
+        'include': '#volt-macros'
+      }
+      {
+        'include': '#volt-objects'
+      }
+      {
+        'include': '#volt-properties'
+      }
+      {
+        'include': '#volt-filters-warg'
+      }
+      {
+        'include': '#volt-filters'
+      }
+      {
+        'include': '#volt-filters-warg-ud'
+      }
+      {
+        'include': '#volt-filters-ud'
+      }
+      {
+        'include': '#volt-strings'
+      }
+      {
+        'include': '#volt-arrays'
+      }
+      {
+        'include': '#volt-hashes'
+      }
+    ]
+  'volt-functions':
+    'captures':
+      '1':
+        'name': 'support.function.volt'
+    'match': '(?<=is\\s)(defined|empty|even|none|odd)'
+  'volt-functions-warg':
+    'begin': '(?<=[\\s\\(\\[\\{:,])(attribute|block|constant|cycle|divisibleby|parent|range|sameas|content)(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'support.function.volt'
+      '2':
+        'name': 'punctuation.definition.parameters.begin.volt'
+    'contentName': 'meta.function.arguments.volt'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.parameters.end.volt'
+    'patterns': [
+      {
+        'include': '#volt-constants'
+      }
+      {
+        'include': '#volt-functions-warg'
+      }
+      {
+        'include': '#volt-functions'
+      }
+      {
+        'include': '#volt-macros'
+      }
+      {
+        'include': '#volt-objects'
+      }
+      {
+        'include': '#volt-properties'
+      }
+      {
+        'include': '#volt-filters-warg'
+      }
+      {
+        'include': '#volt-filters'
+      }
+      {
+        'include': '#volt-filters-warg-ud'
+      }
+      {
+        'include': '#volt-filters-ud'
+      }
+      {
+        'include': '#volt-strings'
+      }
+      {
+        'include': '#volt-arrays'
+      }
+    ]
+  'volt-hashes':
+    'begin': '(?<=[\\s\\(\\{\\[:,])\\{'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.section.hash.begin.volt'
+    'end': '\\}'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.section.hash.end.volt'
+    'name': 'meta.hash.volt'
+    'patterns': [
+      {
+        'include': '#volt-hashes'
+      }
+      {
+        'include': '#volt-arrays'
+      }
+      {
+        'include': '#volt-constants'
+      }
+      {
+        'include': '#volt-strings'
+      }
+      {
+        'include': '#volt-functions-warg'
+      }
+      {
+        'include': '#volt-functions'
+      }
+      {
+        'include': '#volt-macros'
+      }
+      {
+        'include': '#volt-objects'
+      }
+      {
+        'include': '#volt-properties'
+      }
+      {
+        'include': '#volt-filters-warg'
+      }
+      {
+        'include': '#volt-filters'
+      }
+      {
+        'include': '#volt-filters-warg-ud'
+      }
+      {
+        'include': '#volt-filters-ud'
+      }
+      {
+        'match': ':'
+        'name': 'punctuation.separator.key-value.volt'
+      }
+      {
+        'match': ','
+        'name': 'punctuation.separator.object.volt'
+      }
+    ]
+  'volt-helpers':
+    'captures':
+      '1':
+        'name': 'support.function.volt'
+    'match': '(partial|get_value|reset_input|link_to|text_field|password_field|hidden_field|file_field|check_field|radio_field|submit_button|select_static|select|text_area|form|end_form|get_title|stylesheet_link|javascript_include|image|friendly_title|set_doc_type|get_doc_type)'
+  'volt-keywords':
+    'match': '(?<=\\s)((?:end)?(?:block|filter|for|set|if)|as|else|extends|from|ignore missing|import|only|use|with)(?=\\s)'
+    'name': 'keyword.control.volt'
+  'volt-objects':
+    'captures':
+      '1':
+        'name': 'variable.other.volt'
+    'match': '(?<=[\\s\\{\\[\\(:,])([a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*)(?=[\\s\\}\\[\\]\\(\\)\\.\\|,:])'
+  'volt-operators':
+    'patterns': [
+      {
+        'captures':
+          '1':
+            'name': 'keyword.operator.arithmetic.volt'
+        'match': '(?<=\\s)(\\+|-|\\*|/|%|//)(?=\\s)'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'keyword.operator.assignment.volt'
+        'match': '(?<=\\s)(=|~)(?=\\s)'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'keyword.operator.bitwise.volt'
+        'match': '(?<=\\s)(&|\\||\\^)(?=\\s)'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'keyword.operator.comparison.volt'
+        'match': '(?<=\\s)((?:!|=)=|<=?|>=?|i(?:s|n))(?=\\s)'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'keyword.operator.logical.volt'
+        'match': '(?<=\\s)(not|or|and|\\?|:)(?=\\s)'
+      }
+      {
+        'captures':
+          '0':
+            'name': 'keyword.operator.arithmetic.volt'
+        'match': '(?<=[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]\\)\'"])\\*\\*(?=[a-zA-Z0-9_\\x{7f}-\\x{ff}\'"])'
+      }
+      {
+        'captures':
+          '0':
+            'name': 'keyword.operator.other.volt'
+        'match': '(?<=[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]\\)\'"])\\.\\.(?=[a-zA-Z0-9_\\x{7f}-\\x{ff}\'"])'
+      }
+      {
+        'captures':
+          '0':
+            'name': 'keyword.operator.other.volt'
+        'match': '(?<=[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]\\}\\)\'"])\\|(?=[a-zA-Z_\\x{7f}-\\x{ff}])'
+      }
+    ]
+  'volt-properties':
+    'patterns': [
+      {
+        'captures':
+          '1':
+            'name': 'punctuation.separator.property.volt'
+          '2':
+            'name': 'variable.other.property.volt'
+        'match': '(?x)(?<=[a-zA-Z0-9_\\x{7f}-\\x{ff}])(\\.)([a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*)(?=[\\.\\s\\|\\[\\)\\]\\}:,])'
+      }
+      {
+        'begin': '(?x)(?<=[a-zA-Z0-9_\\x{7f}-\\x{ff}])(\\.)([a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*)(\\()'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.separator.property.volt'
+          '2':
+            'name': 'variable.other.property.volt'
+          '3':
+            'name': 'punctuation.definition.parameters.begin.volt'
+        'contentName': 'meta.function.arguments.volt'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.end.volt'
+        'patterns': [
+          {
+            'include': '#volt-constants'
+          }
+          {
+            'include': '#volt-functions-warg'
+          }
+          {
+            'include': '#volt-functions'
+          }
+          {
+            'include': '#volt-helpers'
+          }
+          {
+            'include': '#volt-macros'
+          }
+          {
+            'include': '#volt-objects'
+          }
+          {
+            'include': '#volt-properties'
+          }
+          {
+            'include': '#volt-filters-warg'
+          }
+          {
+            'include': '#volt-filters'
+          }
+          {
+            'include': '#volt-filters-warg-ud'
+          }
+          {
+            'include': '#volt-filters-ud'
+          }
+          {
+            'include': '#volt-strings'
+          }
+          {
+            'include': '#volt-arrays'
+          }
+        ]
+      }
+      {
+        'captures':
+          '1':
+            'name': 'punctuation.section.array.begin.volt'
+          '2':
+            'name': 'variable.other.property.volt'
+          '3':
+            'name': 'punctuation.section.array.end.volt'
+          '4':
+            'name': 'punctuation.section.array.begin.volt'
+          '5':
+            'name': 'variable.other.property.volt'
+          '6':
+            'name': 'punctuation.section.array.end.volt'
+          '7':
+            'name': 'punctuation.section.array.begin.volt'
+          '8':
+            'name': 'variable.other.property.volt'
+          '9':
+            'name': 'punctuation.section.array.end.volt'
+        'match': '(?x)(?<=[a-zA-Z0-9_\\x{7f}-\\x{ff}\\]])(?:(\\[)(\'[a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*\')(\\])|(\\[)("[a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*")(\\])|(\\[)([a-zA-Z_\\x{7f}-\\x{ff}][a-zA-Z0-9_\\x{7f}-\\x{ff}]*)(\\]))'
+      }
+    ]
+  'volt-strings':
+    'patterns': [
+      {
+        'begin': '\''
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.volt'
+        'end': '\''
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.volt'
+        'name': 'string.quoted.single.volt'
+      }
+      {
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.volt'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.volt'
+        'name': 'string.quoted.double.volt'
+      }
+    ]
+  'volt-variable-tags':
+    'begin': '\\{\\{-?'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.section.tag.volt'
+    'end': '-?\\}\\}'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.section.tag.volt'
+    'name': 'meta.tag.template.value.volt'
+    'patterns': [
+      {
+        'include': '#volt-constants'
+      }
+      {
+        'include': '#volt-operators'
+      }
+      {
+        'include': '#volt-functions-warg'
+      }
+      {
+        'include': '#volt-functions'
+      }
+      {
+        'include': '#volt-helpers'
+      }
+      {
+        'include': '#volt-macros'
+      }
+      {
+        'include': '#volt-objects'
+      }
+      {
+        'include': '#volt-properties'
+      }
+      {
+        'include': '#volt-filters-warg'
+      }
+      {
+        'include': '#volt-filters'
+      }
+      {
+        'include': '#volt-filters-warg-ud'
+      }
+      {
+        'include': '#volt-filters-ud'
+      }
+      {
+        'include': '#volt-strings'
+      }
+      {
+        'include': '#volt-arrays'
+      }
+      {
+        'include': '#volt-hashes'
+      }
+    ]

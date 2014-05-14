@@ -1,0 +1,14 @@
+{
+  "name": "language-volt",
+  "version": "0.1.0",
+  "description": "Syntax highlighting for Phalcon's Volt templating engine",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nyaaao/language-volt"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "readmeFilename": "README.md"
+}

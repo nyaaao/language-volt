@@ -1,0 +1,4 @@
+'.text.html.volt':
+  'editor':
+    'commentStart': '{#'
+    'commentEnd': '#}'
