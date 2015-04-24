@@ -401,7 +401,7 @@
         'name': 'support.function.volt'
     'match': '(partial|get_value|reset_input|link_to|text_field|password_field|hidden_field|file_field|check_field|radio_field|submit_button|select_static|select|text_area|form|end_form|get_title|stylesheet_link|javascript_include|image|friendly_title|set_doc_type|get_doc_type)'
   'volt-keywords':
-    'match': '(?<=\\s)((?:end)?(?:block|filter|for|set|if)|as|else|extends|from|ignore missing|import|only|use|with)(?=\\s)'
+    'match': '(?<=\\s)((?:end)?(?:block|filter|for|set|if)|as|else|elseif|extends|from|ignore missing|import|only|use|with)(?=\\s)'
     'name': 'keyword.control.volt'
   'volt-objects':
     'captures':
