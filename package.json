@@ -1,6 +1,6 @@
 {
   "name": "language-volt",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Syntax highlighting for Phalcon's Volt templating engine",
   "repository": {
     "type": "git",
